@@ -9,15 +9,37 @@ const Chart = () => {
        const fetchAPI = async () =>{
            setDailyData(await fetchDailyData());
        }
+
        fetchAPI();
-    } );
+    },);
 
     const lineChart = (
-
-        );
+        dailyData.length
+        ? (
+            <Line 
+            data = {{
+               labels: dailyData.map(({ date }) => date),
+               datasets: [{
+                data: dailyData.map(({ confirmed }) => confirmed),
+                label: 'Infected',
+                borderColor: '#3333FF',
+                fill: true,
+               },
+               {
+                data: dailyData.map(( {deaths }) => deaths),
+                label: 'Deaths',
+                borderColor: 'red',
+                fill: true,
+                backgroundColor: 'rbga(255,0,0,0.5)',
+               }],
+            }} 
+            /> ) : null
+    );
 
     return (
-        <h1>Chart!</h1>
+        <div className={styles.container}>
+        {lineChart}
+        </div>
     )
 }
 export default Chart;
